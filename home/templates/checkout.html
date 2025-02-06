@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero area Start -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="slider-area">
+                <div class="slider-height2 slider-bg5 d-flex align-items-center justify-content-center">
+                    <div class="hero-caption hero-caption2">
+                        <h2>Check Out</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero area End -->
+
+<!-- Checkout Area Start -->
+<section class="checkout_area section-padding">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <form class="row contact_form" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" value="{{ request.user.first_name }}" />
+                            <span class="placeholder">First name</span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" value="{{ request.user.last_name }}" />
+                            <span class="placeholder">Last name</span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" value="{{ request.user.phone }}" />
+                            <span class="placeholder">Phone number</span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="email" class="form-control" value="{{ request.user.email }}" />
+                            <span class="placeholder">Email Address</span>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" value="{{ request.user.address }}" />
+                            <span class="placeholder">Address</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li>
+                                <a href="#">Product<span>Total</span></a>
+                            </li>
+                            {% for item in cart_items %}
+                            <li>
+                                <a href="#">{{ item.book.title }}
+                                    <span class="middle">x {{ item.quantity }}</span>
+                                    <span class="last">${{ item.total_price }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a href="#">Total <span>${{ total_price }}</span></a></li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" id="payme_option" name="payment_method" value="payme" checked/>
+                                <label for="payme_option">Payme</label>
+                            </div>
+                            <div class="radion_btn">
+                                <input type="radio" id="click_option" name="payment_method" value="click"/>
+                                <label for="click_option">Click</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn w-100">Tasdiqlash</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Checkout Area End -->
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero area Start -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="slider-area">
+                <div class="slider-height2 slider-bg5 d-flex align-items-center justify-content-center">
+                    <div class="hero-caption hero-caption2">
+                        <h2>Savatcha</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero area End -->
+
+<!-- Cart Area Start -->
+<section class="cart_area section-padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Kitob</th>
+                        <th>Narxi</th>
+                        <th>Soni</th>
+                        <th>Jami</th>
+                        <th>O‘chirish</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <div class="media">
+                                <div class="d-flex">
+                                    <img src="{{ item.book.image.url }}" alt="{{ item.book.title }}" width="80">
+                                </div>
+                                <div class="media-body">
+                                    <p>{{ item.book.title }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <h5>${{ item.book.price }}</h5>
+                        </td>
+                        <td>
+                            <div class="product_count">
+                                <input class="input-number" type="text" value="{{ item.quantity }}" readonly>
+                            </div>
+                        </td>
+                        <td>
+                            <h5>${{ item.total_price }}</h5>
+                        </td>
+                        <td>
+                            <a href="{% url 'remove-from-cart' item.id %}" class="btn btn-danger">O‘chirish</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <h5>Savatchangiz bo‘sh!</h5>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="checkout_btn_inner float-right">
+                    <h4>Jami: ${{ total_price }}</h4>
+                    <a class="btn" href="{% url 'index' %}">Do‘konga qaytish</a>
+                    <a class="btn checkout_btn" href="{% url 'checkout' %}">To‘lov qilish</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Cart Area End -->
+{% endblock %}

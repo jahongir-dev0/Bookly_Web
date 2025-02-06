@@ -1,0 +1,88 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Kitob Detallari Start -->
+<div class="services-area2">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="single-services d-flex align-items-center mb-0">
+                    <div class="features-img">
+                        <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                    </div>
+                    <div class="features-caption">
+                        <h3>{{ book.title }}</h3>
+                        <p>By {{ book.author }}</p>
+                        <p>Kategoriya: {{ book.category.name }}</p>
+                        <p>Narxi: <span>${{ book.price }}</span></p>
+                        <p>Til: {{ book.language }}</p>
+                        <p>Nashr yili: {{ book.publication_year }}</p>
+                        <p>Filial: {{ book.library_branch.name }}</p>
+                        <p>ISBN: {{ book.isbn }}</p>
+
+                        <div class="review">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p>(120 Review)</p>
+                        </div>
+                        <a href="{% url 'add-to-cart' book.id %}" class="white-btn mr-10">Add to Cart</a>
+                        <a href="#" class="border-btn share-btn"><i class="fas fa-share-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Kitob Detallari End -->
+
+<!-- Kitob haqida qo'shimcha -->
+<section class="our-client section-padding best-selling">
+    <div class="container">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-one" role="tabpanel">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h4>Kitob Tavsifi</h4>
+                        <p>{{ book.title }} haqida qo'shimcha ma'lumot...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-two" role="tabpanel">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h4>Muallif</h4>
+                        <p>{{ book.author }} haqida qo'shimcha ma'lumot...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Subscribe Area Start -->
+<section class="subscribe-area">
+    <div class="container">
+        <div class="subscribe-caption text-center subscribe-padding section-img2-bg"
+             data-background="{% static 'img/gallery/section-bg1.jpg' %}">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-8 col-md-9">
+                    <h3>Join Newsletter</h3>
+                    <p>Bizning yangiliklarga obuna bo'ling va eng yaxshi kitoblarni oling.</p>
+                    <form action="#">
+                        <input type="text" placeholder="Enter your email">
+                        <button class="subscribe-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Subscribe Area End -->
+
+{% endblock %}

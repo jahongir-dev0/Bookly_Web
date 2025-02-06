@@ -1,0 +1,599 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Book Shop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/icon/favicon.png' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/price_rangs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+    <div class="header-area">
+        <div class="main-header ">
+            <div class="header-top ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="d-flex justify-content-between align-items-center flex-sm">
+                                <div class="header-info-left d-flex align-items-center">
+                                    <!-- logo -->
+                                    <div class="logo">
+                                        <a href="{% url 'index2' %}"><img src="{% static 'img/logo/logo.png' %}" alt=""></a>
+                                    </div>
+                                    <!-- Search Box -->
+                                    <form action="#" class="form-box">
+                                        <input type="text" name="Search"
+                                               placeholder="Search book by author or publisher">
+                                        <div class="search-icon">
+                                            <i class="ti-search"></i>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="header-info-right d-flex align-items-center">
+                                    <ul>
+                                        <li><a href="#">FAQ</a></li>
+                                        <li><a href="#">Track Order</a></li>
+                                        <li class="shopping-card">
+                                            <a href="{% url 'cart' %}">
+                                                <img src="{% static 'img/icon/cart.svg' %}" alt="">
+                                            </a>
+                                        </li>
+                                        {% if request.user.is_authenticated %}
+                                        <li><a href="#" class="btn header-btn">{{ request.user.username }}</a></li>
+                                        <li><a href="{% url 'logout' %}" class="btn header-btn">Logout</a></li>
+                                        {% else %}
+                                        <li><a href="{% url 'login' %}" class="btn header-btn">Sign in</a></li>
+                                        <li><a href="{% url 'register' %}" class="btn header-btn">Register</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom  header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12">
+                            <!-- logo 2 -->
+                            <div class="logo2">
+                                <a href="{% url 'index2' %}"><img src="{% static 'img/logo/logo.png' %}" alt=""></a>
+                            </div>
+                            <!-- Main-menu -->
+                            <div class="main-menu text-center d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="{% url 'index2' %}">Home</a></li>
+                                        <li><a href="{% url 'categories' %}">Categories</a></li>
+                                        <li><a href="{% url 'about' %}">About</a></li>
+                                        <li><a href="#">Pages</a>
+                                            <ul class="submenu">
+                                                {% if request.user.is_authenticated %}
+                                                <li><a href="#">Welcome, {{ request.user.username }}</a></li>
+                                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                                {% else %}
+                                                <li><a href="{% url 'login' %}">Login</a></li>
+                                                <li><a href="{% url 'register' %}">Register</a></li>
+                                                {% endif %}
+                                                <li><a href="{% url 'cart' %}">Cart</a></li>
+                                                <li><a href="{% url 'checkout' %}">Checkout</a></li>
+                                                {% for book in books_list|slice:":0" %}
+                                                <li><a href="{% url 'book-details' book.id %}">{{ book.title }}</a></li>
+                                                {% endfor %}
+
+                                                <li><a href="{% url 'blog_details' %}">Blog Details</a></li>
+                                                <li><a href="{% url 'elements' %}">Element</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="{% url 'blog' %}">Blog</a></li>
+                                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-xl-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</header>
+<main>
+    {% block content %}
+    <!-- slider Area Start-->
+    <div class="slider-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="slider-active dot-style">
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height slider-bg1 d-flex align-items-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-6 col-sm-7">
+                                        <div class="hero-caption text-center">
+                                            <span data-animation="fadeInUp" data-delay=".2s">Science Fiction</span>
+                                            <h1 data-animation="fadeInUp" data-delay=".4s">The History<br> of Phipino
+                                            </h1>
+                                            <a href="#" class="btn hero-btn" data-animation="bounceIn" data-delay=".8s">Browse
+                                                Store</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height slider-bg2 d-flex align-items-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-6 col-sm-7">
+                                        <div class="hero-caption text-center">
+                                            <span data-animation="fadeInUp" data-delay=".2s">Science Fiction</span>
+                                            <h1 data-animation="fadeInUp" data-delay=".4s">The History<br> of Phipino
+                                            </h1>
+                                            <a href="#" class="btn hero-btn" data-animation="bounceIn" data-delay=".8s">Browse
+                                                Store</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height slider-bg3 d-flex align-items-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-6 col-sm-7">
+                                        <div class="hero-caption text-center">
+                                            <span data-animation="fadeInUp" data-delay=".2s">Science Fiction</span>
+                                            <h1 data-animation="fadeInUp" data-delay=".4s">The History<br> of Phipino
+                                            </h1>
+                                            <a href="{% url 'categories' %}" class="btn hero-btn"
+                                               data-animation="bounceIn" data-delay=".8s">Browse Store</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- slider Area End-->
+    <!-- Best Selling start -->
+    <div class="best-selling section-bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mb-55">
+                        <h2>Best Selling Books Ever</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="selling-active">
+                        <!-- Single -->
+                        {% for book in pop_books_list %}
+                        <div class="properties pb-20">
+                            <div class="properties-card">
+                                <div class="properties-img">
+                                    <a href="{% url 'book-details' book.id %}">
+                                        {% if book.image %}
+                                        <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                                        {% else %}
+                                        <img src="/static/default-book.jpg" alt="No Image">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="properties-caption">
+                                    <h3><a href="{% url 'book-details' book.id %}">{{ book.title }}</a></h3>
+                                    <p>{{ book.author }}</p>
+                                    <div class="properties-footer d-flex justify-content-between align-items-center">
+                                        <div class="review">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <p>(<span>120</span> Review)</p>
+                                        </div>
+                                        <div class="price">
+                                            {% if book.price %}
+                                            <span>${{ book.price }}</span>
+                                            {% else %}
+                                            <span>Price not available</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Best Selling End -->
+    <!--  services-area start-->
+    <div class="services-area2 top-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-9 col-md-8">
+                    <div class="row">
+                        <!-- tittle -->
+                        <div class="col-xl-12">
+                            <div class="section-tittle d-flex justify-content-between align-items-center mb-40">
+                                <h2 class="mb-0">Featured This Week</h2>
+                                <a href="#" class="browse-btn">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="services-active">
+                                <!-- Single -->
+                                {% for book in pop_books_list|slice:":1" %}
+                                <div class="single-services d-flex align-items-center">
+                                    <div class="features-img">
+                                        <a href="{% url 'book-details' book.id %}">
+                                            {% if book.image %}
+                                            <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                                            {% else %}
+                                            <img src="{% static 'img/default-book.jpg' %}" alt="No Image">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="features-caption">
+                                        <h3>{{ book.title }}</h3>
+                                        <p>By {{ book.author }}</p>
+                                        <div class="price">
+                                            {% if book.price %}
+                                            <span>${{ book.price }}</span>
+                                            {% else %}
+                                            <span>Free</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="review">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                            <p>(120 Review)</p>
+                                        </div>
+                                        <a href="{% url 'book-details' book.id %}" class="border-btn">View Details</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-9">
+                    <!-- Google Addd -->
+                    <div class="google-add">
+                        <img src="{% static 'img/gallery/ad.jpg' %}" alt="" class="w-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- services-area End-->
+    <!-- Latest-items Start -->
+    <section class="our-client section-padding best-selling">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-xl-5 col-lg-5 col-md-12">
+                    <!-- Section Tittle -->
+                    <div class="section-tittle  mb-40">
+                        <h2>Latest Published items</h2>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-12">
+                    <div class="nav-button mb-40">
+                        <!--Nav Button  -->
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-link active" id="nav-one-tab" data-bs-toggle="tab" href="#nav-one"
+                                   role="tab" aria-controls="nav-one" aria-selected="true">All</a>
+                                <a class="nav-link" id="nav-two-tab" data-bs-toggle="tab" href="#nav-two" role="tab"
+                                   aria-controls="nav-two" aria-selected="false">Horror</a>
+                                <a class="nav-link" id="nav-three-tab" data-bs-toggle="tab" href="#nav-three" role="tab"
+                                   aria-controls="nav-three" aria-selected="false">Thriller</a>
+                                <a class="nav-link" id="nav-four-tab" data-bs-toggle="tab" href="#nav-four" role="tab"
+                                   aria-controls="nav-four" aria-selected="false">Science Fiction</a>
+                                <a class="nav-link" id="nav-five-tab" data-bs-toggle="tab" href="#nav-five" role="tab"
+                                   aria-controls="nav-five" aria-selected="false">History</a>
+                            </div>
+                        </nav>
+                        <!--End Nav Button  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <!-- Nav Card -->
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-one" role="tabpanel" aria-labelledby="nav-one-tab">
+                    <!-- Tab 1 -->
+                    <div class="row">
+                        {% for book in books_list %}
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                            <div class="properties pb-30">
+                                <div class="properties-card">
+                                    <div class="properties-img">
+                                        <a href="{% url 'book-details' book.id %}">
+                                            {% if book.image %}
+                                            <img src="{{ book.image.url }}" alt="{{ book.title }}">
+                                            {% else %}
+                                            <img src="/static/default-book.jpg" alt="No Image">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="properties-caption properties-caption2">
+                                        <h3><a href="{% url 'book-details' book.id %}">{{ book.title }}</a></h3>
+                                        <p>{{ book.author }}</p>
+                                        <div class="properties-footer d-flex justify-content-between align-items-center">
+                                            <div class="review">
+                                                <div class="rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </div>
+                                                <p>(<span>120</span> Review)</p>
+                                            </div>
+                                            <div class="price">
+                                                {% if book.price %}
+                                                <span>${{ book.price }}</span>
+                                                {% else %}
+                                                <span>Price not available</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-two" role="tabpanel" aria-labelledby="nav-two-tab">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="more-btn text-center mt-15">
+                        <a href="#" class="border-btn border-btn2 more-btn2">Browse More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest-items End -->
+    <!-- Want To work -->
+    <section class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-xl-6 col-lg-6">
+                <div class="wantToWork-area w-padding2 mb-30"
+                     data-background="{% static 'img/gallery/wants-bg1.jpg' %}">
+                    <h2>The History<br> of Phipino</h2>
+                    <div class="linking">
+                        <a href="#" class="btn wantToWork-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="wantToWork-area w-padding2 mb-30"
+                     data-background="{% static 'img/gallery/wants-bg2.jpg' %}">
+                    <h2>Wilma Mumduya</h2>
+                    <div class="linking">
+                        <a href="#" class="btn wantToWork-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Want To work End -->
+    <!-- Subscribe Area Start -->
+    <section class="subscribe-area">
+        <div class="container">
+            <div class="subscribe-caption text-center  subscribe-padding section-img2-bg"
+                 data-background="{% static 'img/gallery/section-bg1.jpg' %}">
+                <div class="row justify-content-center">
+
+                    <div class="col-xl-6 col-lg-8 col-md-9">
+                        <h3>Join Newsletter</h3>
+                        <p>Lorem started its journey with cast iron (CI) products in 1980. The initial main objective
+                            was to ensure pure water and affordable irrigation.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your email">
+                            <button class="subscribe-btn">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Subscribe Area End -->
+    {% endblock %}
+</main>
+<footer>
+    <div class="footer-wrappper section-bg">
+        <div class="footer-area footer-padding">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-xl-3 col-lg-5 col-md-4 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <!-- logo -->
+                                <div class="footer-logo mb-25">
+                                    <a href="{% url 'index2' %}"><img src="{% static 'img/logo/logo2_footer.png' %}"
+                                                                      alt=""></a>
+                                </div>
+                                <div class="footer-tittle">
+                                    <div class="footer-pera">
+                                        <p>Get the breathing space now, and we’ll extend your term at the other end year
+                                            for go.</p>
+                                    </div>
+                                </div>
+                                <!-- social -->
+                                <div class="footer-social">
+                                    <a href="https://www.facebook.com/groups/world.pythonDevelopers", target="_blank"><i class="fab fa-facebook"></i></a>
+                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Book Category</h4>
+                                <ul>
+                                    <li><a href="#">History</a></li>
+                                    <li><a href="#">Horror - Thriller</a></li>
+                                    <li><a href="#">Love Stories</a></li>
+                                    <li><a href="#">Science Fiction</a></li>
+                                    <li><a href="#">Business</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>&nbsp;</h4>
+                                <ul>
+                                    <li><a href="#">Biography</a></li>
+                                    <li><a href="#">Astrology</a></li>
+                                    <li><a href="#">Digital Marketing</a></li>
+                                    <li><a href="#">Software Development</a></li>
+                                    <li><a href="#">Ecommerce</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Site Map</h4>
+                                <ul class="mb-20">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer-bottom area -->
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-xl-12 ">
+                            <div class="footer-copy-right text-center">
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                                All rights reserved | This template is made with <i class="fa fa-heart color-danger"
+                                                                                    aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com/" style="color: black" target="_blank"
+                                    rel="nofollow noopener">Jahongir Dev</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<!-- Jquery, Popper, Bootstrap -->
+<script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+<script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<!-- Slick-slider , Owl-Carousel ,slick-nav -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+<script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+
+<!--wow , counter , waypoint, Nice-select -->
+<script src="{% static 'js/wow.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'js/waypoints.min.js' %}"></script>
+<script src="{% static 'js/price_rangs.js' %}"></script>
+
+<!-- contact js -->
+<script src="{% static 'js/contact.js' %}"></script>
+<script src="{% static 'js/jquery.form.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/mail-script.js' %}"></script>
+<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+
+<!--  Plugins, main-Jquery -->
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+        integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+        data-cf-beacon='{"rayId":"90b3688b08f1dd23","version":"2025.1.0","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"cd0b4b3a733644fc843ef0b185f98241","b":1}'
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
