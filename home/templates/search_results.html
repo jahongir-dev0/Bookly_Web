@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+
+    {% if books_list %}
+        <ul>
+            {% for book in books_list %}
+                <li>
+                    <a href="{% url 'book-details' book.id %}">
+                        <img src="{{ book.image.url }}" alt="{{ book.title }}" width="50">
+                        <strong>{{ book.title }}</strong> - {{ book.author }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books found for "{{ query }}". Try searching again.</p>
+    {% endif %}
+{% endblock %}

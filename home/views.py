@@ -2,11 +2,13 @@ import requests
 from .models import *
 from .forms import RegisterForm, LoginForm
 
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Q
 from django.db.models import Sum
 
 
@@ -224,3 +226,18 @@ def contact_page(request):
 
 def elements_page(request):
     return render(request, 'elements.html')
+
+def search_books(request):
+    query = request.GET.get('q', '')  # URL-dan qidiruv so‘zini olish
+    books_list = Book.objects.all()
+
+    if query:
+        books_list = books_list.filter(
+            Q(title__icontains=query) | Q(author__icontains=query)  # Kitob nomi yoki muallif bo‘yicha qidirish
+        )
+
+    context = {
+        'books_list': books_list,
+        'query': query  # Qidiruv natijalarini saqlash
+    }
+    return render(request, 'search_results.html', context)
